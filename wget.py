@@ -486,7 +486,12 @@ def detect_filename(url=None, out=None, headers=None, default="download.wget"):
         names["headers"] = filename_from_headers(headers) or ''
     return names["out"] or names["headers"] or names["url"] or default
 
-def download(url, out=None, bar=bar_adaptive):
+def set_proxies(proxies):
+    proxy = ulib.ProxyHandler(proxies)
+    opener = ulib.build_opener(proxy)
+    ulib.install_opener(opener)
+    
+def download(url, out=None, bar=bar_adaptive, proxies=None):
     """High level function, which downloads URL into tmp file in current
     directory and then renames it to filename autodetected from either URL
     or HTTP headers.
@@ -521,6 +526,9 @@ def download(url, out=None, bar=bar_adaptive):
         binurl = list(urlparse.urlsplit(url))
         binurl[2] = urlparse.quote(binurl[2])
         binurl = urlparse.urlunsplit(binurl)
+
+        if proxies:
+            set_proxies(proxies)
     else:
         binurl = url
     (tmpfile, headers) = ulib.urlretrieve(binurl, tmpfile, callback)

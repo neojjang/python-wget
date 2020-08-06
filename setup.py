@@ -15,8 +15,8 @@ def get_version(relpath):
 setup(
     name='wget',
     version=get_version('wget.py'),
-    author='anatoly techtonik <techtonik@gmail.com>',
-    url='http://bitbucket.org/techtonik/python-wget/',
+    author='neojjang <neojjang@gmail.com>',
+    url='https://github.com/neojjang/python-wget',
 
     description="pure python download utility",
     license="Public Domain",
